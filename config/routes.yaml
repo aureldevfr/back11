@@ -6,3 +6,10 @@ app_login:
     path: /login
     controller: lexik_jwt_authentication.handler.authentication_success
     methods: ['POST']
+
+api_login_check:
+    path: /api/login_check
+
+app_logout:
+    path: /api/logout
+    methods: [POST]
