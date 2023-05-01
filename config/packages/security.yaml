@@ -43,8 +43,15 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/api/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        # - { path: ^/api/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/register, roles: ROLE_ADMIN }
+        - { path: ^/api/users/create, roles: ROLE_ADMIN }
+        - { path: ^/api/users/delete, roles: ROLE_ADMIN }
+        - { path: ^/api/products/edit, roles: IS_AUTHENTICATED_FULLY}
+        - { path: ^/api/products/delete, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/order, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:

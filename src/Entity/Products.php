@@ -101,4 +101,38 @@ class Products
         return $this;
     }
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $available;
+
+    public function getAvailable():  ? bool
+    {
+        return $this->available;
+    }
+
+    public function setAvailable(bool $available) : self
+    {
+        $this->available = $available;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $category;
+
+    public function getCategory():  ? string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category) : self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
 }
