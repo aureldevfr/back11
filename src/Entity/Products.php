@@ -83,4 +83,22 @@ class Products
         return $this;
     }
 
+    //price
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $price;
+
+    public function getPrice():  ? int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(int $price) : self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
 }

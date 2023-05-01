@@ -36,6 +36,9 @@ class AuthController extends AbstractController
                 $data['password']
             )
         );
+        $user->setRoles(['ROLE_USER']);
+        $user->setFirstname($data['firstname']);
+        $user->setLastname($data['lastname']);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($user);

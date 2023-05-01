@@ -15,12 +15,29 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProductsController extends AbstractController
 {
+
     /**
      * @Route("/products", name="products_index", methods={"GET"})
      */
     public function index(ProductsRepository $productsRepository): Response
     {
         // Récupérer la liste des produits et retourner la réponse
+
+        $products = $productsRepository->findAll();
+
+        $productsArray = [];
+
+        foreach ($products as $product) {
+            $productsArray[] = [
+                'id' => $product->getId(),
+                'name' => $product->getName(),
+                'description' => $product->getDescription(),
+                'photo' => $product->getPhoto(),
+                'price' => $product->getPrice(),
+            ];
+        }
+
+        return new JsonResponse($productsArray, Response::HTTP_OK);
     }
 
     /**
@@ -36,6 +53,7 @@ class ProductsController extends AbstractController
         $product->setName($data['name']);
         $product->setDescription($data['description']);
         $product->setPhoto($data['photo']);
+        $product->setPrice($data['price']);
 
         $entityManager->persist($product);
         $entityManager->flush();

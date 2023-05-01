@@ -36,17 +36,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $password;
 
-    public function getId(): ?int
+    public function getId():  ? int
     {
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getEmail() :  ? string
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(string $email) : self
     {
         $this->email = $email;
 
@@ -111,7 +111,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @see UserInterface
      */
-    public function getSalt(): ?string
+    public function getSalt():  ? string
     {
         return null;
     }
@@ -123,5 +123,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $firstname;
+
+    public function getFirstname() :  ? string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname) : self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $lastname;
+
+    public function getLastname():  ? string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname) : self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
     }
 }
