@@ -118,4 +118,21 @@ class Order
         return $this->products;
     }
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive;
+
+    public function getIsActive():  ? bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive) : self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
 }

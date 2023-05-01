@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -40,8 +41,15 @@ class AuthController extends AbstractController
         $user->setFirstname($data['firstname']);
         $user->setLastname($data['lastname']);
 
+        $order = new Order();
+        $order->setUser($user);
+        $order->setTotalPrice(0);
+        $order->setCreationDate(new \DateTimeImmutable());
+        $order->setisActive(true);
+
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($user);
+        $entityManager->persist($order);
         $entityManager->flush();
 
         return new JsonResponse(['status' => 'User created'], Response::HTTP_CREATED);

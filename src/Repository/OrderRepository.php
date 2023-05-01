@@ -39,28 +39,43 @@ class OrderRepository extends ServiceEntityRepository
         }
     }
 
+    public function findOrCreateActiveOrderForUser(App\Entity\User $user): Order
+    {
+        $activeOrder = $this->findOneBy(['user' => $user, 'active' => true]);
+
+        if (!$activeOrder) {
+            $activeOrder = new Order();
+            $activeOrder->setUser($user);
+            $activeOrder->setActive(true);
+            $this->_em->persist($activeOrder);
+            $this->_em->flush();
+        }
+
+        return $activeOrder;
+    }
+
 //    /**
-//     * @return Order[] Returns an array of Order objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('o.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //     * @return Order[] Returns an array of Order objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('o')
+    //            ->andWhere('o.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('o.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
 //    public function findOneBySomeField($value): ?Order
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    {
+    //        return $this->createQueryBuilder('o')
+    //            ->andWhere('o.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }
