@@ -35,6 +35,8 @@ class ProductsController extends AbstractController
                 'description' => $product->getDescription(),
                 'photo' => $product->getPhoto(),
                 'price' => $product->getPrice(),
+                'category' => $product->getCategory(),
+                'available' => $product->getAvailable() ? true : false,
             ];
         }
 
