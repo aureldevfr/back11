@@ -128,7 +128,61 @@ class OrderController extends AbstractController
             ];
         }
 
-        return new JsonResponse($productsArray, JsonResponse::HTTP_OK);
+        $orderDetails = [
+            'id' => $activeOrder->getId(),
+            'totalPrice' => $activeOrder->getTotalPrice(),
+            'creationDate' => $activeOrder->getCreationDate(),
+            'isActive' => $activeOrder->getIsActive(),
+            'products' => $productsArray,
+        ];
+
+        return new JsonResponse($orderDetails, JsonResponse::HTTP_OK);
+    }
+
+    // Get information about a specific order by id
+    /**
+     * @Route("/api/order/{id}", name="app_order_id", methods={"GET"})
+     */
+    public function getOrderById(
+        int $id,
+        Security $security,
+        OrderRepository $orderRepository
+    ): Response{
+        $user = $security->getUser();
+
+        if (!$user) {
+            return new JsonResponse(['error' => 'Not authenticated'], JsonResponse::HTTP_UNAUTHORIZED);
+        }
+
+        $order = $orderRepository->find($id);
+
+        if (!$order) {
+            return new JsonResponse(['error' => 'Order not found'], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $products = $order->getProducts();
+
+        $productsArray = [];
+
+        foreach ($products as $product) {
+            $productsArray[] = [
+                'id' => $product->getId(),
+                'name' => $product->getName(),
+                'description' => $product->getDescription(),
+                'photo' => $product->getPhoto(),
+                'price' => $product->getPrice(),
+            ];
+        }
+
+        $orderDetails = [
+            'id' => $order->getId(),
+            'totalPrice' => $order->getTotalPrice(),
+            'creationDate' => $order->getCreationDate(),
+            'isActive' => $order->getIsActive(),
+            'products' => $productsArray,
+        ];
+
+        return new JsonResponse($orderDetails, JsonResponse::HTTP_OK);
     }
 
     /**
